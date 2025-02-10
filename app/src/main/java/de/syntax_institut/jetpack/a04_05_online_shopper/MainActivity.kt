@@ -11,19 +11,20 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
+import de.syntax_institut.jetpack.a04_05_online_shopper.data.viewmodels.ViewModelApi
 import de.syntax_institut.jetpack.a04_05_online_shopper.ui.theme.AppTheme
+import de.syntax_institut.jetpack.a04_05_online_shopper.ui.views.HomeView
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            val viewModel: ViewModelApi = viewModel()
             AppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    HomeView(modifier = Modifier.padding(innerPadding), viewModel)
                 }
             }
         }
