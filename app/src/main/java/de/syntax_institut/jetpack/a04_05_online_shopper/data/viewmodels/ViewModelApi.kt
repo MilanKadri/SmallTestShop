@@ -34,8 +34,7 @@ class ViewModelApi: ViewModel() {
         viewModelScope.launch {
             try {
                 val response = api.getProducts()
-                val newProduct =  response
-                _productState.value = newProduct
+                _productState.value = response
             } catch (e: Exception) {
                 Log.e("loadAllProducts", "Error: $e")
                 _alertState.value = true
@@ -47,8 +46,7 @@ class ViewModelApi: ViewModel() {
         viewModelScope.launch {
             try {
                 val response = api.getCategoryMensClothing()
-                val newProducts = response
-                _productState.value = newProducts
+                _productState.value = response
             } catch (e: Exception) {
                 Log.e("loadMensWear", "Error $e")
             }
@@ -59,8 +57,7 @@ class ViewModelApi: ViewModel() {
         viewModelScope.launch {
             try {
                 val response = api.getCategoryWomensClothing()
-                val newProducts = response
-                _productState.value = newProducts
+                _productState.value = response
             } catch (e: Exception) {
                 Log.e("loadWomensWear", "Error $e")
             }
@@ -71,8 +68,7 @@ class ViewModelApi: ViewModel() {
         viewModelScope.launch {
             try {
                 val response = api.getCategoryJewelery()
-                val newProducts = response
-                _productState.value = newProducts
+                _productState.value = response
             } catch (e: Exception) {
                 Log.e("loadJewelery", "Error $e")
             }
@@ -83,8 +79,7 @@ class ViewModelApi: ViewModel() {
         viewModelScope.launch {
             try {
                 val response = api.getCategoryElectronics()
-                val newProducts = response
-                _productState.value = newProducts
+                _productState.value = response
             } catch (e: Exception) {
                 Log.e("LoadElectronics", "Error $e")
             }

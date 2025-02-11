@@ -60,7 +60,7 @@ fun main() = runBlocking {
 
     try {
         val response = api.getCategoryJewelery()
-        println("API Response: ${response}")
+        println("API Response: $response")
     } catch (e: Exception) {
         println("API Error: ${e.message}")
     }
