@@ -33,10 +33,9 @@ class ViewModelApi: ViewModel() {
 
     fun loadAllProducts(){
         viewModelScope.launch {
-
             try {
                 val response = api.getProducts()
-                val newProduct = _productState.value + response
+                val newProduct =  response
                 _productState.value = newProduct
             } catch (e: Exception) {
                 Log.e("loadAllProducts", "Error: $e")
@@ -49,7 +48,7 @@ class ViewModelApi: ViewModel() {
         viewModelScope.launch {
             try {
                 val response = api.getCategoryMensClothing()
-                val newProducts = _productState.value + response
+                val newProducts = response
                 _productState.value = newProducts
             } catch (e: Exception) {
                 Log.e("loadMensWear", "Error $e")
@@ -61,7 +60,7 @@ class ViewModelApi: ViewModel() {
         viewModelScope.launch {
             try {
                 val response = api.getCategoryWomensClothing()
-                val newProducts = _productState.value + response
+                val newProducts = response
                 _productState.value = newProducts
             } catch (e: Exception) {
                 Log.e("loadWomensWear", "Error $e")
@@ -73,7 +72,7 @@ class ViewModelApi: ViewModel() {
         viewModelScope.launch {
             try {
                 val response = api.getCategoryJewelery()
-                val newProducts = _productState.value + response
+                val newProducts = response
                 _productState.value = newProducts
             } catch (e: Exception) {
                 Log.e("loadJewelery", "Error $e")
@@ -85,7 +84,7 @@ class ViewModelApi: ViewModel() {
         viewModelScope.launch {
             try {
                 val response = api.getCategoryElectronics()
-                val newProducts = _productState.value + response
+                val newProducts = response
                 _productState.value = newProducts
             } catch (e: Exception) {
                 Log.e("LoadElectronics", "Error $e")
