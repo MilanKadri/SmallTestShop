@@ -27,7 +27,6 @@ class ViewModelApi: ViewModel() {
 
     fun dismissAlert() {
         _alertState.value = false
-        loadAllProducts()
     }
 
     fun loadAllProducts(){
