@@ -3,7 +3,6 @@ package de.syntax_institut.jetpack.a04_05_online_shopper.data.viewmodels
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.CreationExtras
 import de.syntax_institut.jetpack.a04_05_online_shopper.data.api.Product
 import de.syntax_institut.jetpack.a04_05_online_shopper.data.api.ProductsAPI
 import kotlinx.coroutines.flow.MutableStateFlow

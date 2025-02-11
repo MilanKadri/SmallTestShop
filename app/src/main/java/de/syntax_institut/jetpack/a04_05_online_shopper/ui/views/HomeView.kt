@@ -1,6 +1,5 @@
 package de.syntax_institut.jetpack.a04_05_online_shopper.ui.views
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -20,7 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import de.syntax_institut.jetpack.a04_05_online_shopper.data.viewmodels.ViewModelApi
-import de.syntax_institut.jetpack.a04_05_online_shopper.ui.components.FilterDropdown
 import de.syntax_institut.jetpack.a04_05_online_shopper.ui.components.ProductEntry
 
 @Composable
