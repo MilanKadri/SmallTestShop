@@ -21,6 +21,8 @@ kspVersion = "2.0.21-1.0.27"
 moshiVersion = "1.15.0"
 #RetroFit
 retrofitVersion = "2.11.0"
+#Interceptor
+loggingInterceptor = "4.9.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -56,6 +58,8 @@ converterMoshi = { group = "com.squareup.retrofit2", name = "converter-moshi", v
 #Coil
 coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coilCompose" }
 coil-network-okhttp = { group = "io.coil-kt.coil3", name = "coil-network-okhttp", version.ref = "coilCompose" }
+#Interceptor
+logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "loggingInterceptor" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

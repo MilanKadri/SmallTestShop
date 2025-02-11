@@ -16,11 +16,18 @@ class ViewModelApi: ViewModel() {
     private val _productState = MutableStateFlow<List<Product>>(listOf())
     val productState = _productState.asStateFlow()
 
+    private val _alertState = MutableStateFlow(false)
+    val alertState = _alertState.asStateFlow()
+
 
 
 
     init {
         loadAllProducts()
+    }
+
+    fun dismissAlert() {
+        _alertState.value = false
     }
 
     fun loadAllProducts(){
@@ -32,6 +39,7 @@ class ViewModelApi: ViewModel() {
                 _productState.value = newProduct
             } catch (e: Exception) {
                 Log.e("loadAllProducts", "Error: $e")
+                _alertState.value = true
             }
         }
     }

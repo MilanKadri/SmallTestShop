@@ -16,7 +16,7 @@ import coil3.compose.AsyncImage
 import de.syntax_institut.jetpack.a04_05_online_shopper.data.api.Product
 
 @Composable
-fun ProducEntry(
+fun ProductEntry(
     modifier: Modifier = Modifier,
     product: Product
 ) {
