@@ -9,6 +9,8 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -17,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.compose.SubcomposeAsyncImage
 import de.syntax_institut.jetpack.a04_05_online_shopper.R
@@ -30,8 +33,10 @@ fun ProductEntry(
     val context = LocalContext.current
     Card(
         modifier = modifier
-            .padding(4.dp),
-        colors = CardDefaults.cardColors(Color.Transparent)
+            .padding(horizontal = 12.dp)
+            .padding(vertical = 4.dp),
+        colors = CardDefaults.cardColors(Color.White),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Row(
             modifier = Modifier,
@@ -39,9 +44,9 @@ fun ProductEntry(
         ) {
             SubcomposeAsyncImage(
                 modifier = Modifier
-                    .size(75.dp)
+                    .size(85.dp)
                     .padding(8.dp),
-                model = product.image /* + "please generate a error here its fun i promise" */,
+                model = product.image /* + "please generate a error here its fun i promise" */ ,
                 contentDescription = null,
                 loading = { CircularProgressIndicator(color = Color.Green) },
                 onError = { Toast.makeText(context, "Error loading Image", Toast.LENGTH_LONG).show() },
@@ -63,14 +68,24 @@ fun ProductEntry(
 
             ListItem(
                 headlineContent = {
-                    Text(product.title)
+                    Text(
+                        text = product.title,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        color = Color.Black
+                    )
                 },
                 supportingContent = {
-                    Text(product.category)
+                    Text(
+                        text = product.category
+                        )
                 },
                 trailingContent = {
-                    Text(String.format("%.2f€", product.price))
-                }
+                    Text(
+                        text = String.format("%.2f€", product.price)
+                    )
+                },
+                colors = ListItemDefaults.colors(Color.White)
             )
         }
     }
