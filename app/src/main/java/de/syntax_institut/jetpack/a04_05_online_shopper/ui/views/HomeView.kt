@@ -84,57 +84,57 @@ fun HomeView(
                 )
             }
         }
-       AnimatedVisibility(visible = showFilters) {
-           Row(
-               modifier = Modifier
-                   .padding(start = 12.dp),
-           ) {
-               Button(
-                   onClick = { showDropdown = !showDropdown },
-                   modifier = Modifier
-                       .padding(end = 4.dp)
-               ) {
-                   Text(text = "Results: $selectedLimit")
-               }
 
-               DropdownMenu(
-                   expanded = showDropdown,
-                   onDismissRequest = { showDropdown = false }
-               ) {
-                   limits.forEach { limit ->
-                       DropdownMenuItem(
-                           modifier = Modifier
-                               .width(45.dp)
-                               .align(Alignment.Start),
-                           text = { Text(limit) },
-                           onClick = {
-                               selectedLimit = limit
-                               showDropdown = false
-                           }
-                       )
-                   }
-               }
+        AnimatedVisibility(visible = showFilters) {
+            Row(
+                modifier = Modifier
+                    .padding(start = 12.dp),
+            ) {
+                Button(
+                    onClick = { showDropdown = !showDropdown },
+                    modifier = Modifier
+                        .padding(end = 4.dp)
+                ) {
+                    Text(text = "Results: $selectedLimit")
+                }
 
-               LazyRow(
-                   modifier = Modifier
-                       .padding(vertical = 1.dp)
-                       .padding(horizontal = 12.dp)
+                DropdownMenu(
+                    expanded = showDropdown,
+                    onDismissRequest = { showDropdown = false }
+                ) {
+                    limits.forEach { limit ->
+                        DropdownMenuItem(
+                            modifier = Modifier
+                                .width(50.dp),
+                            text = { Text(limit) },
+                            onClick = {
+                                selectedLimit = limit
+                                showDropdown = false
+                            }
+                        )
+                    }
+                }
 
-               ) {
-                   items(categories) { category ->
-                       val isSelected = category == selectedCategory
-                       Button(
-                           modifier = Modifier
-                               .padding(end = 4.dp),
-                           onClick = { selectedCategory = category },
-                           colors = ButtonDefaults.buttonColors(if (isSelected) Color.Gray else Color.LightGray)
-                       ) {
-                           Text(text = category)
-                       }
-                   }
-               }
-           }
-       }
+                LazyRow(
+                    modifier = Modifier
+                        .padding(vertical = 1.dp)
+                        .padding(horizontal = 12.dp)
+
+                ) {
+                    items(categories) { category ->
+                        val isSelected = category == selectedCategory
+                        Button(
+                            modifier = Modifier
+                                .padding(end = 4.dp),
+                            onClick = { selectedCategory = category },
+                            colors = ButtonDefaults.buttonColors(if (isSelected) Color.Gray else Color.LightGray)
+                        ) {
+                            Text(text = category)
+                        }
+                    }
+                }
+            }
+        }
         if (alertState) {
             AlertDialog(
                 onDismissRequest = {
