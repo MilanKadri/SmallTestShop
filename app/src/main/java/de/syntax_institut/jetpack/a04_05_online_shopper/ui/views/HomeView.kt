@@ -1,17 +1,23 @@
 package de.syntax_institut.jetpack.a04_05_online_shopper.ui.views
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,9 +27,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.dp
+import de.syntax_institut.jetpack.a04_05_online_shopper.R
 import de.syntax_institut.jetpack.a04_05_online_shopper.data.viewmodels.ViewModelApi
 import de.syntax_institut.jetpack.a04_05_online_shopper.ui.components.ProductEntry
 
@@ -35,10 +45,12 @@ fun HomeView(
     val products by viewModel.productState.collectAsState()
     val alertState by viewModel.alertState.collectAsState()
     val categories = listOf("All Products", "Electronics", "Jewelery", "Men's Wear", "Women's Wear")
-    val limitis = listOf("1", "5", "10", "15", "20")
+    val limits = listOf("1", "5", "10", "15", "20")
 
     var selectedLimit by remember { mutableStateOf("20") }
     var selectedCategory by remember { mutableStateOf("All Products") }
+    var showDropdown by remember { mutableStateOf(false) }
+    var showFilters by remember { mutableStateOf(false) }
 
     LaunchedEffect(selectedCategory, selectedLimit) {
         when (selectedCategory) {
@@ -52,59 +64,77 @@ fun HomeView(
 
     Column(modifier) {
         Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 12.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 text = "YEEZY.COM",
                 color = if (isSystemInDarkTheme()) Color.White else Color.Black,
                 style = MaterialTheme.typography.headlineMedium
             )
-        }
-
-//        Row {
-//            OutlinedTextField(
-//                value = { selectedCategory },
-//                onValueChange = { selectedCategory  },
-//                placeholder = "HH-01"
-//            )
-//        }
-        LazyRow(
-            modifier = Modifier
-                .padding(vertical = 1.dp)
-                .padding(horizontal = 12.dp),
-
+            IconButton(
+                onClick = { showFilters = !showFilters }
             ) {
-            items(limitis) { limit ->
-                val isSelected = limit == selectedLimit
-                Button(
-                    modifier = Modifier.padding(horizontal = 4.dp),
-                    onClick = { selectedLimit = limit },
-                    colors = ButtonDefaults.buttonColors(if (isSelected) Color.Gray else Color.LightGray)
-                ) {
-                    Text(text = limit)
-                }
+                Icon(
+                    painter = painterResource(id = R.drawable.baseline_filter_alt_24),
+                    contentDescription = null
+                )
             }
         }
+       AnimatedVisibility(visible = showFilters) {
+           Row(
+               modifier = Modifier
+                   .padding(start = 12.dp),
+           ) {
+               Button(
+                   onClick = { showDropdown = !showDropdown },
+                   modifier = Modifier
+                       .padding(end = 4.dp)
+               ) {
+                   Text(text = "Results: $selectedLimit")
+               }
 
-        LazyRow(
-            modifier = Modifier
-                .padding(vertical = 1.dp)
-                .padding(horizontal = 12.dp),
+               DropdownMenu(
+                   expanded = showDropdown,
+                   onDismissRequest = { showDropdown = false }
+               ) {
+                   limits.forEach { limit ->
+                       DropdownMenuItem(
+                           modifier = Modifier
+                               .width(45.dp)
+                               .align(Alignment.Start),
+                           text = { Text(limit) },
+                           onClick = {
+                               selectedLimit = limit
+                               showDropdown = false
+                           }
+                       )
+                   }
+               }
 
-            ) {
-            items(categories) { category ->
-                val isSelected = category == selectedCategory
-                Button(
-                    modifier = Modifier.padding(horizontal = 4.dp),
-                    onClick = { selectedCategory = category },
-                    colors = ButtonDefaults.buttonColors(if (isSelected) Color.Gray else Color.LightGray)
-                ) {
-                    Text(text = category)
-                }
-            }
-        }
+               LazyRow(
+                   modifier = Modifier
+                       .padding(vertical = 1.dp)
+                       .padding(horizontal = 12.dp)
 
+               ) {
+                   items(categories) { category ->
+                       val isSelected = category == selectedCategory
+                       Button(
+                           modifier = Modifier
+                               .padding(end = 4.dp),
+                           onClick = { selectedCategory = category },
+                           colors = ButtonDefaults.buttonColors(if (isSelected) Color.Gray else Color.LightGray)
+                       ) {
+                           Text(text = category)
+                       }
+                   }
+               }
+           }
+       }
         if (alertState) {
             AlertDialog(
                 onDismissRequest = {
