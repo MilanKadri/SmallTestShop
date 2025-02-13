@@ -22,17 +22,17 @@ class ViewModelApi: ViewModel() {
 
 
     init {
-        loadAllProducts()
+        loadAllProducts(count = "")
     }
 
     fun dismissAlert() {
         _alertState.value = false
     }
 
-    fun loadAllProducts(){
+    fun loadAllProducts(count: String){
         viewModelScope.launch {
             try {
-                val response = api.getProducts()
+                val response = api.getProducts(count = count)
                 _productState.value = response
             } catch (e: Exception) {
                 Log.e("loadAllProducts", "Error: $e")
@@ -41,10 +41,10 @@ class ViewModelApi: ViewModel() {
         }
     }
 
-    fun loadMensWear() {
+    fun loadMensWear(count: String) {
         viewModelScope.launch {
             try {
-                val response = api.getCategoryMensClothing()
+                val response = api.getCategoryMensClothing(count = count)
                 _productState.value = response
             } catch (e: Exception) {
                 Log.e("loadMensWear", "Error $e")
@@ -52,10 +52,10 @@ class ViewModelApi: ViewModel() {
         }
     }
 
-    fun loadWomensWear() {
+    fun loadWomensWear(count: String) {
         viewModelScope.launch {
             try {
-                val response = api.getCategoryWomensClothing()
+                val response = api.getCategoryWomensClothing(count = count)
                 _productState.value = response
             } catch (e: Exception) {
                 Log.e("loadWomensWear", "Error $e")
@@ -63,10 +63,10 @@ class ViewModelApi: ViewModel() {
         }
     }
 
-    fun loadJewelery() {
+    fun loadJewelery(count: String) {
         viewModelScope.launch {
             try {
-                val response = api.getCategoryJewelery()
+                val response = api.getCategoryJewelery(count = count)
                 _productState.value = response
             } catch (e: Exception) {
                 Log.e("loadJewelery", "Error $e")
@@ -74,10 +74,10 @@ class ViewModelApi: ViewModel() {
         }
     }
 
-    fun loadElectronics() {
+    fun loadElectronics(count: String) {
         viewModelScope.launch {
             try {
-                val response = api.getCategoryElectronics()
+                val response = api.getCategoryElectronics(count = count)
                 _productState.value = response
             } catch (e: Exception) {
                 Log.e("LoadElectronics", "Error $e")

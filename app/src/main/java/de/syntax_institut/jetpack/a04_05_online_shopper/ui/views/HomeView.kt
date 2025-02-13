@@ -13,11 +13,9 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -37,7 +35,20 @@ fun HomeView(
     val products by viewModel.productState.collectAsState()
     val alertState by viewModel.alertState.collectAsState()
     val categories = listOf("All Products", "Electronics", "Jewelery", "Men's Wear", "Women's Wear")
+    val limitis = listOf("1", "5", "10", "15", "20")
+
+    var selectedLimit by remember { mutableStateOf("20") }
     var selectedCategory by remember { mutableStateOf("All Products") }
+
+    LaunchedEffect(selectedCategory, selectedLimit) {
+        when (selectedCategory) {
+            "All Products" -> viewModel.loadAllProducts(selectedLimit)
+            "Electronics" -> viewModel.loadElectronics(selectedLimit)
+            "Jewelery" -> viewModel.loadJewelery(selectedLimit)
+            "Men's Wear" -> viewModel.loadMensWear(selectedLimit)
+            "Women's Wear" -> viewModel.loadWomensWear(selectedLimit)
+        }
+    }
 
     Column(modifier) {
         Row(
@@ -50,6 +61,7 @@ fun HomeView(
                 style = MaterialTheme.typography.headlineMedium
             )
         }
+
 //        Row {
 //            OutlinedTextField(
 //                value = { selectedCategory },
@@ -58,32 +70,41 @@ fun HomeView(
 //            )
 //        }
         LazyRow(
-            modifier = modifier
+            modifier = Modifier
+                .padding(vertical = 1.dp)
+                .padding(horizontal = 12.dp),
+
+            ) {
+            items(limitis) { limit ->
+                val isSelected = limit == selectedLimit
+                Button(
+                    modifier = Modifier.padding(horizontal = 4.dp),
+                    onClick = { selectedLimit = limit },
+                    colors = ButtonDefaults.buttonColors(if (isSelected) Color.Gray else Color.LightGray)
+                ) {
+                    Text(text = limit)
+                }
+            }
+        }
+
+        LazyRow(
+            modifier = Modifier
+                .padding(vertical = 1.dp)
                 .padding(horizontal = 12.dp),
 
             ) {
             items(categories) { category ->
                 val isSelected = category == selectedCategory
-
                 Button(
                     modifier = Modifier.padding(horizontal = 4.dp),
-                    onClick = {
-                        selectedCategory = category
-                        when (category) {
-                            "All Products" -> viewModel.loadAllProducts()
-                            "Electronics" -> viewModel.loadElectronics()
-                            "Jewelery" -> viewModel.loadJewelery()
-                            "Men's Wear" -> viewModel.loadMensWear()
-                            "Women's Wear" -> viewModel.loadWomensWear()
-                        }
-                    },
+                    onClick = { selectedCategory = category },
                     colors = ButtonDefaults.buttonColors(if (isSelected) Color.Gray else Color.LightGray)
                 ) {
                     Text(text = category)
                 }
             }
-
         }
+
         if (alertState) {
             AlertDialog(
                 onDismissRequest = {

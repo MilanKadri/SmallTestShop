@@ -46,7 +46,7 @@ fun ProductEntry(
                 modifier = Modifier
                     .size(85.dp)
                     .padding(8.dp),
-                model = product.image /* + "please generate a error here its fun i promise" */ ,
+                model = product.image /*+ "please generate a error here its fun i promise" */ ,
                 contentDescription = null,
                 loading = { CircularProgressIndicator(color = Color.Green) },
                 onError = { Toast.makeText(context, "Error loading Image", Toast.LENGTH_LONG).show() },
