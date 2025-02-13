@@ -31,7 +31,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.dp
 import de.syntax_institut.jetpack.a04_05_online_shopper.R
 import de.syntax_institut.jetpack.a04_05_online_shopper.data.viewmodels.ViewModelApi
