@@ -91,7 +91,7 @@ fun HomeView(
                 )
             }
             IconButton(
-                onClick = { showSearchBar = !showSearchBar}
+                onClick = { showSearchBar = !showSearchBar }
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.baseline_find_replace_24),
@@ -100,8 +100,10 @@ fun HomeView(
             }
         }
         AnimatedVisibility(visible = showSearchBar) {
-            Row(modifier = Modifier
-                .padding(horizontal = 12.dp)) {
+            Row(
+                modifier = Modifier
+                    .padding(horizontal = 12.dp)
+            ) {
                 OutlinedTextField(
                     value = searchQuery,
                     onValueChange = { searchQuery = it },

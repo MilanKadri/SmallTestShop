@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class ViewModelApi: ViewModel() {
+class ViewModelApi : ViewModel() {
     private val api = ProductsAPI.retrofitService
 
     private val _productState = MutableStateFlow<List<Product>>(listOf())
@@ -17,8 +17,6 @@ class ViewModelApi: ViewModel() {
 
     private val _alertState = MutableStateFlow(false)
     val alertState = _alertState.asStateFlow()
-
-
 
 
     init {
@@ -29,7 +27,7 @@ class ViewModelApi: ViewModel() {
         _alertState.value = false
     }
 
-    fun loadAllProducts(count: String){
+    fun loadAllProducts(count: String) {
         viewModelScope.launch {
             try {
                 val response = api.getProducts(count = count)
