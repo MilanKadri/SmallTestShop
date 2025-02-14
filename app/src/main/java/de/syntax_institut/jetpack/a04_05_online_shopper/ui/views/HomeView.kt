@@ -5,6 +5,7 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -19,6 +20,8 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -50,6 +53,8 @@ fun HomeView(
     var selectedCategory by remember { mutableStateOf("All Products") }
     var showDropdown by remember { mutableStateOf(false) }
     var showFilters by remember { mutableStateOf(false) }
+    var showSearchBar by remember { mutableStateOf(false) }
+    var searchQuery by remember { mutableStateOf("") }
 
     LaunchedEffect(selectedCategory, selectedLimit) {
         when (selectedCategory) {
@@ -74,6 +79,9 @@ fun HomeView(
                 color = if (isSystemInDarkTheme()) Color.White else Color.Black,
                 style = MaterialTheme.typography.headlineMedium
             )
+
+            Spacer(modifier.weight(1f))
+
             IconButton(
                 onClick = { showFilters = !showFilters }
             ) {
@@ -82,8 +90,36 @@ fun HomeView(
                     contentDescription = null
                 )
             }
+            IconButton(
+                onClick = { showSearchBar = !showSearchBar}
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.baseline_find_replace_24),
+                    contentDescription = null
+                )
+            }
         }
-
+        AnimatedVisibility(visible = showSearchBar) {
+            Row(modifier = Modifier
+                .padding(horizontal = 12.dp)) {
+                OutlinedTextField(
+                    value = searchQuery,
+                    onValueChange = { searchQuery = it },
+                    label = { Text("Search..") },
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = Color.Black,
+                        unfocusedBorderColor = Color.Black,
+                        focusedLabelColor = Color.Black,
+                        unfocusedLabelColor = Color.Black,
+                        cursorColor = Color.Black,
+                        focusedTextColor = Color.Black,
+                        unfocusedTextColor = Color.Black
+                    )
+                )
+            }
+        }
         AnimatedVisibility(visible = showFilters) {
             Row(
                 modifier = Modifier
@@ -155,7 +191,9 @@ fun HomeView(
             )
         } else {
             LazyColumn {
-                items(products) { product ->
+                items(products.filter { product ->
+                    product.title.contains(searchQuery, ignoreCase = true)
+                }) { product ->
                     ProductEntry(
                         product = product
                     )
